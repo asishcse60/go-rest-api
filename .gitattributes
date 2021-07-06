@@ -1,0 +1,4 @@
+* linguist-vendored
+*.go linguist-vendored=false
+$ cat .gitattributes
+*.rb linguist-language=GO
