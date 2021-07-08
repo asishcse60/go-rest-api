@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/asishcse60/go-rest-api/internal/comment"
+	"github.com/asishcse60/go-rest-api/internal/database"
 	transportHttp "github.com/asishcse60/go-rest-api/internal/transport/http"
 	"net/http"
 )
@@ -11,11 +13,16 @@ import (
 
 type App struct {}
 
-//Sets up of our application
+// Run Sets up of our application
 func (a *App) Run() error {
 	fmt.Println("Setting Up our App")
-
-	handler := transportHttp.NewHandler()
+	var err error
+	db,err:=database.NewDatabase()
+	if err != nil{
+		return err
+	}
+	commentService := comment.NewService(db)
+	handler := transportHttp.NewHandler(commentService)
 	handler.SetUpRoutes()
 
 	if err:=http.ListenAndServe(":8000", handler.Router);err!=nil{
