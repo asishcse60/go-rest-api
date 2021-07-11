@@ -15,7 +15,7 @@ func NewDatabase() (*gorm.DB, error){
 	err := godotenv.Load(".env")
 
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+	log.Fatalf("Error loading .env file")
 	}
 
 	dbUsername := os.Getenv("DB_USERNAME")
@@ -28,7 +28,7 @@ func NewDatabase() (*gorm.DB, error){
     fmt.Println(dbHost)
     fmt.Println(dbTable)
     fmt.Println(dbPort)
-	connectString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort,dbUsername, dbTable, dbPassword)
+	connectString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword)
 
 	db, err := gorm.Open("postgres", connectString)
 	if err != nil{
