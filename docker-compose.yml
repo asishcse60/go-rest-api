@@ -19,7 +19,7 @@ services:
     build: .
     container_name: "rest-api"
     environment:
-      DEV: "DEV"
+      TEST: "test"
       DB_USERNAME: "postgres"
       DB_PASSWORD: "6001"
       DB_DB: "postgres"
