@@ -5,17 +5,17 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"os"
 )
 
 
 func NewDatabase() (*gorm.DB, error){
-	fmt.Println("Setting up new database connection")
+	log.Info("Setting up new database connection")
 	err := godotenv.Load(".env")
 
 	if err != nil {
-	log.Fatalf("Error loading .env file")
+	log.Fatal("Error loading .env file")
 	}
 
 	dbUsername := os.Getenv("DB_USERNAME")
@@ -23,8 +23,9 @@ func NewDatabase() (*gorm.DB, error){
 	dbHost := os.Getenv("DB_HOST")
 	dbTable := os.Getenv("DB_TABLE")
 	dbPort := os.Getenv("DB_PORT")
+	sslMode := os.Getenv("SSL_MODE")
 
-	connectString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword)
+	connectString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s", dbHost, dbPort, dbUsername, dbTable, dbPassword, sslMode)
     fmt.Println(dbUsername)
     fmt.Println(dbPassword)
     fmt.Println(dbHost)

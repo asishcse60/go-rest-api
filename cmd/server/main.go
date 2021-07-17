@@ -5,16 +5,22 @@ import (
 	"github.com/asishcse60/go-rest-api/internal/comment"
 	"github.com/asishcse60/go-rest-api/internal/database"
 	transportHttp "github.com/asishcse60/go-rest-api/internal/transport/http"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
-//App - the struct which contains things like pointers
+//App - contain application information
 //to do database connections
 
-type App struct {}
+type App struct {
+	Name string
+	version string
+}
 
 // Run Sets up of our application
 func (a *App) Run() error {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.WithFields(log.Fields{"AppName":a.Name, "AppVersion": a.version}).Info("Setting Up our App")
 	fmt.Println("Setting Up our App")
 	var err error
 	db,err:=database.NewDatabase()
@@ -39,9 +45,9 @@ func (a *App) Run() error {
 }
 func main(){
 	fmt.Println("GO rest api")
-	app := App{}
+	app := App{Name: "go-rest-api", version: "1.0"}
 	if err := app.Run();err != nil{
-		fmt.Println("Error starting of our rest api")
-		fmt.Println(err)
+		log.Error("Error starting of our rest api")
+		log.Fatal(err)
 	}
 }
