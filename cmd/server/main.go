@@ -8,7 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
 )
-
+//https://www.youtube.com/watch?v=Z3SYDTMP3ME
 //App - contain application information
 //to do database connections
 

@@ -18,20 +18,24 @@ spec:
       labels:
         name: go-rest-api
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: go-rest-api
-          image: "dockerasu60/go-rest-api:latest"
-          imagePullPolicy: IfNotPresent
+          image: dockerasu60/go-rest-api
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: DB_PORT
-              value: "$DB_PORT"
+              value: "5432"
             - name: DB_HOST
-              value: "$DB_HOST"
+              value: "172.18.0.1"
             - name: DB_PASSWORD
-              value: "$DB_PASSWORD"
+              value: "6001"
             - name: DB_TABLE
-              value: "$DB_TABLE"
+              value: "postgres"
             - name: DB_USERNAME
-              value: "$DB_USERNAME"
+              value: "postgres"
+            - name: SSL_MODE
+              value: "disable"
