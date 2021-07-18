@@ -1,0 +1,111 @@
+upDocker Step:
+1. Build Image
+2. Run your Image as Container
+3. Use Container for development
+4. Run your test
+5. Configure CI/CD
+6. Deploy your app
+
+//postgres image download and build
+docker run --name go-rest-api-db -e POSTGRES_PASSWORD=6001 -p 5432:5432 -d postgres
+docker ps
+
+//Set env variable
+set DEV_DB_USERNAME=postgres
+
+docker run --name repo alpine/git clone https://github.com/asishcse60/go-rest-api.git
+
+//build api
+docker build --tag tag_name .
+docker build --tag docker-gs-ping .
+
+// docker service run
+docker run -it -p 8080:8080 docker-gs-ping
+
+
+//restart image
+docker restart image_name
+docker restart go-rest-api
+
+// Port test
+docker port tag_name port_No/tcp
+docker port test 7890/tcp --it
+
+//docker compose file
+docker-compose up --build
+
+// kind install : Open PowerShall in Admin mode
+Step1: Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Step2: Open new PowerShall in admin mode: choco install docker-desktop -y
+Step3: Open new PowerShall in admin mode: choco install kind -y
+Step4: Open new PowerShall in admin mode: kind create cluster
+Step 5: After Complete check
+
+kubectl cluster-info
+kubectl get services  
+   
+//download
+go get github.com/a8m/envsubst/cmd/envsubst
+
+//all db value set
+set DB_USERNAME=doadmin
+
+//temp yml file create
+envsubst < config/deployment.yml > temp.yml
+
+//docker file build for create image and push for docker hub
+docker build -t dockerasu60/go-rest-api .
+
+//docker image push
+docker push dockerasu60/go-rest-api:latest
+
+//docker container network info
+docker inspect container_id 
+
+//docker log collected
+docker logs dac04a95317a -f
+
+//docker linux machine enter
+docker exec -it container_id bin/bash
+
+//docker linux path for pg_hba.conf file
+nano /var/lib/postgresql/data/pg_hba.conf
+
+//https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands
+//k8 cluster info 
+kubectl cluster-info --context kind-kind
+
+//Set k8 image pull credential from docker
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v2/ --docker-username=dockerasu60 --docker-password=Thimpu2006331060! --docker-email=asishcse60@gmail.com
+kubectl get secret regcred --output=yaml
+
+//k8 deployment.yml file deploy
+envsubst < config/deployment.yml | kubectl apply -f-
+
+//k8 get deployment
+kubectl get deployments
+
+// k8 delete deployment - container_name
+kubectl delete deployment go-rest-api
+
+//k8 get pods
+kubectl get pods
+
+//k8 get logs
+kubectl logs container_name
+
+
+//k8 service file deploy:
+kubectl apply -f config/service.yml
+
+//k8 get endpoint
+kubectl get endpoints
+
+//k8 get deployment
+kubectl get deployments
+
+//k8 port forwarding
+kubectl port-forward service/go-rest-api 8080:8080
+
+
+      
